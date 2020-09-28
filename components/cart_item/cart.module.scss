@@ -1,0 +1,28 @@
+@use '../../styles/globals.scss' as base;
+
+.info_conatiner{
+    display:flex !important;
+    flex-direction: column;
+    padding-top: 1% !important;
+}
+
+%info{
+    flex-grow: 1;
+
+}
+
+.info_item{
+    @extend %info;
+}
+
+
+.info_header{
+    @extend %info;
+
+    display: flex !important;
+    justify-content: space-between;
+}
+
+.del_btn{
+    max-height:50% !important;
+}

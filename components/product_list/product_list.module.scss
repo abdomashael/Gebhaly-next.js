@@ -1,0 +1,35 @@
+@use '../../styles/globals.scss' as base;
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.img {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
+  border-radius: 2%;
+}
+
+.product {
+  width: 100% !important;
+  border-width: 2px;
+  padding: 12px 36px;
+  flex-grow: 1;
+  margin: 12px 12px !important;
+  z-index: 1 !important;
+}
+
+.detail {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.btn {
+  display: block;
+  width: 100%;
+  align-items: center;
+}

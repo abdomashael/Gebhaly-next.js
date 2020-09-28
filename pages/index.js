@@ -1,65 +1,64 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import { Button } from "semantic-ui-react";
+import Layout from "../components/layout/layout";
+import ProductList from "../components/product_list/product_list";
+import styles from "../styles/Home.module.scss";
+import { fecthPage } from "../utils/api";
 
-export default function Home() {
+const Home = ({ products }) => {
+  const [currentProducts,setCurrentProducts] = useState(products)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [nextPageProducts, setNextPageProducts] = useState([]);
+  const [show,setShow] = useState(true)
+ 
+  useEffect(() => {
+    getNextPage()
+  }, [currentPage]);
+
+  const loadPageHandler=()=>{
+    setCurrentProducts([...products,...nextPageProducts])
+    setCurrentPage(currentPage+1)
+  }
+
+  const getNextPage= async()=>{
+    const res= await fecthPage(currentPage + 1)
+    setNextPageProducts(res)
+    if (res.length===0) {
+      setShow(false)
+    }
+  }
+ 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Gebhaly | Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <Layout>
+        <ProductList products={currentProducts} />
+        <br/>
+        <Button disabled={! show} fluid  color="black" onClick={loadPageHandler}>
+          Show More
+        </Button>
+      </Layout>
     </div>
-  )
+  );
+};
+
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts
+
+  const products = await fecthPage(1);
+
+  // By returning { props: posts }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      products,
+    },
+  };
 }
+
+export default Home;
