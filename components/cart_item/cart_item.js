@@ -17,19 +17,16 @@ const CartItem = ({ product, massageHandler, fetchCart }) => {
 
   useEffect(() => {
     if (login) {
-      editCartItemHandler();
+      editCartItemHandler(editType);
     }
   }, [login]);
 
-  useEffect(() => {
-    if(editType!==types.NO_OP) editCartItemHandler() ;
-  }, [editType]);
 
   const setIsLogin = (status) => {
     status === true ? setLogin(status) : "";
   };
 
-  const editCartItemHandler = async () => {
+  const editCartItemHandler = async (editType) => {
     let message = {
       show: true,
       content: (
@@ -146,7 +143,9 @@ const CartItem = ({ product, massageHandler, fetchCart }) => {
             color="red"
             className={styles.del_btn}
             onClick={() => {
-              setEditType(types.DELETE);
+              let type=types.DELETE;
+              setEditType(type);
+              editCartItemHandler(type)
             }}
           >
             <Button.Content hidden>Delete</Button.Content>
@@ -165,6 +164,7 @@ const CartItem = ({ product, massageHandler, fetchCart }) => {
               content: "Save",
               onClick: () => {
                 setEditType(types.EDIT);
+                editCartItemHandler(types.EDIT)
               },
             }}
             actionPosition="left"
