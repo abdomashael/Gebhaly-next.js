@@ -4,7 +4,7 @@ Axios.defaults.withCredentials = true;
 
 const URL = process.env.API_URL;
 
-const fecthPage = async (pageNo) => {
+const FetchPage = async (pageNo) => {
   let requestOptions = {
     method: "GET",
     redirect: "follow",
@@ -14,7 +14,7 @@ const fecthPage = async (pageNo) => {
   return products;
 };
 
-const addItemToCart = async (id, qty) => {
+const AddItemToCart = async (id, qty) => {
   let myHeaders = new Headers();
   myHeaders.append("jwt", localStorage.getItem("jwt"));
 
@@ -34,7 +34,7 @@ const addItemToCart = async (id, qty) => {
 };
 
 const EditCartProduct= async(id,qty)=>{
-  var config = {
+  let config = {
     method: 'put',
     url: `${URL}/cart?product_id=${id}&qty=${qty}`,
     headers: { jwt: localStorage.getItem("jwt") },
@@ -47,7 +47,7 @@ const EditCartProduct= async(id,qty)=>{
 }
 
 const DeleteCartProduct= async(id)=>{
-  var config = {
+  let config = {
     method: 'delete',
     url: `${URL}/cart/${id}`,
     headers: { jwt: localStorage.getItem("jwt") },
@@ -61,8 +61,8 @@ const DeleteCartProduct= async(id)=>{
 }
 
 
-const getUserCart = async()=>{
-  var config = {
+const GetUserCart = async()=>{
+  let config = {
     method: 'get',
     url: `${URL}/cart`,
     headers: { jwt: localStorage.getItem("jwt") },
@@ -76,7 +76,7 @@ const getUserCart = async()=>{
 
 
 const CheckoutCart= async()=>{
-  var config = {
+  let config = {
     method: 'post',
     url: `${URL}/cart/checkout`,
     headers: { jwt: localStorage.getItem("jwt") },
@@ -88,7 +88,18 @@ const CheckoutCart= async()=>{
   
 }
 
+const GetUser = async ()=>{
+  let config = {
+    method: 'get',
+    url: `${URL}/auth/user`,
+    headers: { jwt: localStorage.getItem("jwt") },
 
+  };
+  
+    let res = await Axios(config);
+    return res;
+  
+}
 
 const login = async (mail, pass) => {
   let myHeaders = new Headers();
@@ -115,4 +126,4 @@ const login = async (mail, pass) => {
 };
 
 
-module.exports = { fecthPage, addItemToCart,getUserCart,EditCartProduct,DeleteCartProduct,CheckoutCart,login };
+module.exports = { FetchPage, AddItemToCart,GetUserCart,EditCartProduct,DeleteCartProduct,CheckoutCart,login,GetUser };

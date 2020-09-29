@@ -4,7 +4,7 @@ import { Button } from "semantic-ui-react";
 import Layout from "../components/layout/layout";
 import ProductList from "../components/product_list/product_list";
 import styles from "../styles/Home.module.scss";
-import { fecthPage } from "../utils/api";
+import { FetchPage } from "../utils/api";
 
 const Home = ({ products }) => {
   const [currentProducts,setCurrentProducts] = useState(products)
@@ -22,7 +22,7 @@ const Home = ({ products }) => {
   }
 
   const getNextPage= async()=>{
-    const res= await fecthPage(currentPage + 1)
+    const res= await FetchPage(currentPage + 1)
     setNextPageProducts(res)
     if (res.length===0) {
       setShow(false)
@@ -50,7 +50,7 @@ const Home = ({ products }) => {
 export async function getStaticProps() {
   // Call an external API endpoint to get posts
 
-  const products = await fecthPage(1);
+  const products = await FetchPage(1);
 
   // By returning { props: posts }, the Blog component
   // will receive `posts` as a prop at build time

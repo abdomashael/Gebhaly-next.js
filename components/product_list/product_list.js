@@ -9,7 +9,7 @@ import {
   Input,
   Loader as SLoader,
 } from "semantic-ui-react";
-import { addItemToCart } from "../../utils/api";
+import { AddItemToCart } from "../../utils/api";
 import Login from "../login/login";
 
 
@@ -40,7 +40,7 @@ const ProductCard = ({ product, massageHandler }) => {
     };
     massageHandler(message);
     try {
-      let res = await addItemToCart(product._id, qty);
+      let res = await AddItemToCart(product._id, qty);
 
       switch (res) {
         case 401:
@@ -170,7 +170,7 @@ const ProductList = ({ products }) => {
   return (
     <div>
       <div className={cx(styles.container)}>{list}</div>
-      {msg.show ? <Message>{msg.content}</Message> : ""}
+      {msg.show ? <Message setMsg={setMsg}>{msg.content}</Message> : ""}
     </div>
   );
 };

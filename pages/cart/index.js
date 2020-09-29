@@ -5,7 +5,7 @@ import CartItem from "../../components/cart_item/cart_item";
 import Layout from "../../components/layout/layout";
 import Loader from "../../components/loader/loader";
 import Message from "../../components/message/message";
-import { getUserCart, CheckoutCart } from "../../utils/api";
+import { GetUserCart, CheckoutCart } from "../../utils/api";
 
 import { faSadTear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +15,7 @@ export default function Cart() {
   const [price, setPrice] = useState(0);
   const [msg, setMsg] = useState({ show: false, content: "" });
   const [isEmpty, setIsEmpty] = useState(false);
+  const [isVisit, setIsVisit] = useState(false);
 
   useEffect(() => {
       fetchCart();
@@ -23,7 +24,7 @@ export default function Cart() {
 
   const fetchCart = async () => {
     try {
-      const res = await getUserCart();
+      const res = await GetUserCart();
       res.data.items.length === 0 ? setIsEmpty(true) : setCart(res.data.items);
       setPrice(res.data.total_price);
     } catch (error) {
@@ -32,6 +33,10 @@ export default function Cart() {
           setIsEmpty(true);
           break;
 
+          case 401:
+            setIsVisit(true);
+            break;
+  
         default:
           break;
       }
@@ -103,9 +108,9 @@ export default function Cart() {
           <Label as="div" color="blue" size="massive" ribbon>
             Your cart
           </Label>
-          {isEmpty ? (
+          {isEmpty ||isVisit ? (
             <Label color="red" size="massive">
-              Cart is Empty!!!!
+              {isEmpty? "Cart is Empty!!!!":"Login to show your cart."}
             </Label>
           ) : (
             <Item.Group divided>
@@ -146,7 +151,7 @@ export default function Cart() {
           </div>
         </div>
 
-        {msg.show ? <Message>{msg.content}</Message> : ""}
+        {msg.show ? <Message setMsg={setMsg}>{msg.content}</Message> : ""}
       </Layout>
     </div>
   );

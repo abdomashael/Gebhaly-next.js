@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useContext, useState } from "react";
 import {
   Button,
   Form,
@@ -6,11 +6,13 @@ import {
   Label,
   Loader as SLoader,
 } from "semantic-ui-react";
+import { LoginContext } from "../../pages/_app";
 import { login } from "../../utils/api";
 
 
-const onSubmitHandler = async (e, setTryLogin, setError, isLogin) => {
+const onSubmitHandler = async (e, setTryLogin, setError, isLogin,loginContext) => {
     e.preventDefault();
+    const mail = e.target.mail.value
     setTryLogin(true);
     let resCode = await login(e.target.mail.value, e.target.pass.value);
     setTryLogin(false);
@@ -23,6 +25,7 @@ const onSubmitHandler = async (e, setTryLogin, setError, isLogin) => {
         });
         break;
       case 200:
+        loginContext.setUserMail(mail)
         isLogin(true);
         break;
   
@@ -36,11 +39,12 @@ const Login = ({ isLogin }) => {
   const [tryLogin, setTryLogin] = useState(false);
   const [error, setError] = useState({ hidden: true, content: "" });
 
+  const login= useContext(LoginContext);
   return (
     <div>
       <Form
         onSubmit={(e) => {
-          onSubmitHandler(e, setTryLogin, setError, isLogin);
+          onSubmitHandler(e, setTryLogin, setError, isLogin,login);
         }}
       >
         <Header  color="blue" size="large" >
