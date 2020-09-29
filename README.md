@@ -22,3 +22,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### user 2:
     email: mgiovannini1@cpanel.net
     password: jfj3bQ
+
+
+## App screenshots
+
+![Home Page](https://imgur.com/a/6EhIZJO)
+![Cart Page](https://imgur.com/5Eqea4B)
