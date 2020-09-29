@@ -5,6 +5,8 @@ This is a [Next.js](https://nextjs.org/) project for demo task.
 First, run the development server:
 
 ```bash
+npm i
+
 npm run dev
 # or
 yarn dev
