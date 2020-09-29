@@ -27,5 +27,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## App screenshots
 
-![Home Page](https://imgur.com/a/6EhIZJO)
-![Cart Page](https://imgur.com/5Eqea4B)
+![Home Page](https://i.imgur.com/ypqSPuB.png)
+![Cart Page](https://i.imgur.com/5Eqea4B.png)
